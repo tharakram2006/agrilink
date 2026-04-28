@@ -162,16 +162,13 @@ AgriLink/
 ├── style.css           # Styling
 ├── script.js           # JavaScript logic
 │
-├── assets/             # All static files
-│   ├── images/         # UI images (icons, illustrations)
-│   │   ├── farmer.png
-│   │   ├── buyer.png
-│   │   └── banner.png
-│   │
-│   ├── screenshots/    # Project screenshots for README
-│   │   ├── homepage.png
-│   │   ├── farmer-dashboard.png
-│   │   └── buyer-dashboard.png
+├── farmer.png          # Farmer image
+├── buyer.png           # Buyer image
+├── banner.png          # Banner image
+│
+├── homepage.png        # Home page screenshot
+├── farmer-dashboard.png
+├── buyer-dashboard.png
 │
 └── README.md           # Documentation
 ```
@@ -180,7 +177,7 @@ AgriLink/
 ## ⚡ Installation & Usage
 
 1. Clone the repository  
-   git clone https://github.com/tarakram2006/agrilink.git  
+   `git clone https://github.com/tarakram2006/agrilink.git  `
 
 2. Navigate to the project folder  
 
