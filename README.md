@@ -136,7 +136,7 @@ No backend is used currently. All data is handled in-memory.
 ---
 
 ## 📂 Project Structure
-
+```
 AgriLink/
 │
 ├── index.html
@@ -150,13 +150,13 @@ AgriLink/
 │   │   
 │
 └── README.md
-
+```
 ---
 
 ## ⚡ Installation & Usage
 
 1. Clone the repository  
-   git clone https://github.com/your-username/agrilink.git  
+   git clone https://github.com/tarakram2006/agrilink.git  
 
 2. Navigate to the project folder  
 
