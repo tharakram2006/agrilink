@@ -132,17 +132,17 @@ No backend is used currently. All data is handled in-memory.
 
 ### 🏠 Home Page
 <p align="center">
-  <img src="assets/screenshots/homepage.png" width="80%" alt="Home Page">
+  <img src="homepage.png" width="80%" alt="Home Page">
 </p>
 
 ### 👨‍🌾 Farmer Dashboard
 <p align="center">
-  <img src="assets/screenshots/farmer-dashboard.png" width="80%" alt="Farmer Dashboard">
+  <img src="farmer-dashboard.png" width="80%" alt="Farmer Dashboard">
 </p>
 
 ### 🛒 Buyer Dashboard
 <p align="center">
-  <img src="assets/screenshots/buyer-dashboard.png" width="80%" alt="Buyer Dashboard">
+  <img src="buyer-dashboard.png" width="80%" alt="Buyer Dashboard">
 </p>
 
 ---
