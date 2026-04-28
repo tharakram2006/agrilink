@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriLink Direct</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Screen -->
+        <section id="screen-login" class="screen active">
+            <div class="card login-card">
+                <h1 class="logo">AgriLink</h1>
+                <p class="subtitle">Direct Farmer-to-Market Platform</p>
+                
+                <div class="tabs">
+                    <button class="tab active" onclick="setLoginRole('buyer')" id="tab-buyer">Login as Buyer</button>
+                    <button class="tab" onclick="setLoginRole('seller')" id="tab-seller">Login as Seller</button>
+                </div>
+
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="login-email" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input type="tel" id="login-mobile" pattern="[0-9]{10}" maxlength="10" minlength="10" required placeholder="Enter 10-digit number" title="Please enter exactly 10 digits">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="login-password" required placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full">Login</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Seller Dashboard -->
+        <section id="screen-seller" class="screen">
+            <div class="dashboard-header" style="margin-bottom: 1rem;">
+                <h2>Seller Dashboard</h2>
+                <div class="header-actions">
+                    <div class="profile-display" onclick="openModal('seller-profile-modal')">
+                        <span id="display-seller-name">👤 Set Profile</span>
+                    </div>
+                    <button class="btn btn-outline btn-small" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <!-- Farmer Animated Banner -->
+            <div class="farmer-banner mb-2">
+                <img src="assets/farmer.png" class="animated-farmer" alt="Farmer">
+                <div class="banner-text">
+                    <h3 style="color:var(--primary); font-size:1.5rem; margin-bottom:0.5rem;">Manage Your Digital Farm</h3>
+                    <p style="color:var(--text-muted); line-height:1.5;">List your fresh crops directly to the marketplace, set your own prices, and watch your direct-to-consumer sales roll in!</p>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-column">
+                    <div class="card">
+                        <h3>Add New Item</h3>
+                        <form id="add-item-form" onsubmit="handleAddItem(event)">
+                            <div class="form-group">
+                                <label>Item Name</label>
+                                <input type="text" id="item-name" required placeholder="e.g., Organic Wheat">
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" id="item-location" required placeholder="e.g., Punjab">
+                            </div>
+                            <div class="form-group">
+                                <label>Quantity (kg)</label>
+                                <input type="number" id="item-qty" min="1" required placeholder="0" oninput="calculateTotal()">
+                            </div>
+                            <div class="form-group">
+                                <label>Price per kg (₹)</label>
+                                <input type="number" id="item-price" min="0.01" step="0.01" required placeholder="0.00" oninput="calculateTotal()">
+                            </div>
+                            <div class="total-calc">
+                                <span>Total Estimated Value: </span>
+                                <strong id="item-total">₹0.00</strong>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-full mt-1">Add Item to Marketplace</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="dashboard-column">
+                    <div class="card mb-1">
+                        <h3>My Listed Items</h3>
+                        <div class="table-container">
+                            <table id="seller-inventory-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Qty (kg)</th>
+                                        <th>Price/kg</th>
+                                        <th>Total Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="seller-inventory-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Recent Sales Orders</h3>
+                        <div class="table-container">
+                            <table id="seller-orders-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Item</th>
+                                        <th>Qty Sold</th>
+                                        <th>Total Earned</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="seller-orders-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Buyer Dashboard -->
+        <section id="screen-buyer" class="screen">
+            <div class="dashboard-header" style="margin-bottom: 1rem;">
+                <h2>Buyer Marketplace</h2>
+                <div class="header-actions">
+                    <div class="profile-display" onclick="openModal('buyer-profile-modal')">
+                        <span id="display-buyer-name">👤 Set Profile</span>
+                    </div>
+                    <button class="btn btn-outline btn-small" onclick="logout()">Logout</button>
+                </div>
+            </div>
+
+            <!-- Buyer Animated Banner -->
+            <div class="farmer-banner mb-2">
+                <img src="assets/buyer.png" class="animated-farmer" alt="Buyer">
+                <div class="banner-text">
+                    <h3 style="color:var(--primary); font-size:1.5rem; margin-bottom:0.5rem;">Welcome to the Marketplace!</h3>
+                    <p style="color:var(--text-muted); line-height:1.5;">Browse fresh organic produce sourced directly from farmers. Enjoy transparent pricing and seamless direct delivery.</p>
+                </div>
+            </div>
+
+            <!-- Platform Flowchart -->
+            <div class="route-visualization" style="max-width: 1200px; margin: 0 auto 2rem; background: #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: none;">
+                <h4 style="text-align: center; color: var(--text-muted); margin-bottom: 1.5rem;">Direct Supply Chain Flow</h4>
+                <div class="route-steps">
+                    <div class="step active">
+                        <div class="circle" style="font-size: 1.2rem;">🚜</div>
+                        <p>Farmers List Crops</p>
+                    </div>
+                    <div class="line active"></div>
+                    <div class="step active">
+                        <div class="circle" style="font-size: 1.2rem;">🛒</div>
+                        <p>Buyers Purchase</p>
+                    </div>
+                    <div class="line active"></div>
+                    <div class="step active">
+                        <div class="circle" style="font-size: 1.2rem;">🚚</div>
+                        <p>Direct Delivery</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-column">
+                    <div class="card" id="purchase-card" style="display: none;">
+                        <h3>Purchase Item</h3>
+                        <div id="selected-item-details" class="mb-1">
+                            <!-- Details injected here -->
+                        </div>
+                        <form id="purchase-form" onsubmit="handlePurchase(event)">
+                            <input type="hidden" id="purchase-item-id">
+                            <div class="form-group">
+                                <label>Required Quantity (kg)</label>
+                                <input type="number" id="purchase-qty" min="1" required placeholder="Enter amount" oninput="calculateBuyerDiscount()">
+                            </div>
+                            <div class="total-calc" style="display:none; flex-direction:column; gap:0.5rem;" id="discount-preview">
+                                <!-- Populated by JS -->
+                            </div>
+                            <button type="submit" class="btn btn-primary w-full">Check Availability & Order</button>
+                        </form>
+                        <div id="purchase-message" class="mt-1"></div>
+                        
+                        <div id="route-visualization" class="route-visualization mt-1" style="display: none;">
+                            <h4>🚚 Delivery Route Active</h4>
+                            <p id="route-eta" class="mb-1" style="color:var(--primary); font-weight:600;"></p>
+                            <div class="route-steps">
+                                <div class="step active">
+                                    <div class="circle">1</div>
+                                    <p id="route-origin">Farm</p>
+                                </div>
+                                <div class="line active"></div>
+                                <div class="step active">
+                                    <div class="circle">2</div>
+                                    <p>AgriLink Hub</p>
+                                </div>
+                                <div class="line"></div>
+                                <div class="step">
+                                    <div class="circle">3</div>
+                                    <p id="route-dest">Buyer Destination</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-column">
+                    <div class="card mb-1">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                            <h3 style="margin:0;">Available Items</h3>
+                            <input type="text" id="buyer-search" placeholder="🔍 Search crops or location..." style="padding:0.5rem 1rem; border:1px solid #c8e6c9; border-radius:20px; outline:none; width:220px;" oninput="renderBuyerMarket()">
+                        </div>
+                        <div class="table-container">
+                            <table id="buyer-market-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Location</th>
+                                        <th>Available (kg)</th>
+                                        <th>Price/kg</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="buyer-market-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>My Past Orders</h3>
+                        <div class="table-container">
+                            <table id="buyer-orders-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Item</th>
+                                        <th>Qty</th>
+                                        <th>Total Paid</th>
+                                        <th>Delivery Time</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="buyer-orders-body">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modals -->
+    <div id="seller-profile-modal" class="modal">
+        <div class="modal-content card">
+            <span class="close" onclick="closeModal('seller-profile-modal')">&times;</span>
+            <h3>Seller Profile</h3>
+            <form id="seller-profile-form" onsubmit="handleSellerProfileSave(event)">
+                <div class="form-group">
+                    <label>Farm Name</label>
+                    <input type="text" id="profile-farm-name" placeholder="e.g. Green Acres Farm">
+                </div>
+                <div class="form-group">
+                    <label>Area (Location)</label>
+                    <input type="text" id="profile-farm-location" placeholder="e.g. Punjab, India" oninput="syncSellerLocation()">
+                </div>
+                <div class="form-group">
+                    <label>Crop Harvest (Tons/Year)</label>
+                    <input type="number" id="profile-farm-harvest" placeholder="e.g. 500">
+                </div>
+                <div class="form-group">
+                    <label>Experience (Years)</label>
+                    <input type="number" id="profile-farm-experience" placeholder="e.g. 10">
+                </div>
+                <button type="submit" class="btn btn-primary w-full mt-1">Save Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="buyer-profile-modal" class="modal">
+        <div class="modal-content card">
+            <span class="close" onclick="closeModal('buyer-profile-modal')">&times;</span>
+            <h3>Buyer Profile</h3>
+            <div class="buyer-stats mb-1" style="background:#f1f8e9; padding:1rem; border-radius:8px; border:1px solid #c8e6c9;">
+                <h4 style="margin-bottom:0.5rem; color:var(--primary); font-size:0.9rem;">Your Activity</h4>
+                <div style="display:flex; justify-content:space-between; font-size:0.9rem;">
+                    <span>Total Orders:</span> <strong id="stat-total-orders">0</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:0.9rem; margin-top:0.3rem;">
+                    <span>Volume Purchased:</span> <strong id="stat-total-volume">0 kg</strong>
+                </div>
+            </div>
+            <form id="buyer-profile-form" onsubmit="handleBuyerProfileSave(event)">
+                <div class="form-group">
+                    <label>Business / Name</label>
+                    <input type="text" id="profile-buyer-name" placeholder="e.g. EcoFoods Inc.">
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <input type="text" id="profile-buyer-address" placeholder="e.g. New Delhi, India">
+                </div>
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" id="profile-buyer-mobile" pattern="[0-9]{10}" maxlength="10" minlength="10" placeholder="e.g. 9876543210" title="Please enter exactly 10 digits">
+                </div>
+                <button type="submit" class="btn btn-primary w-full mt-1">Save Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
