@@ -229,9 +229,9 @@ This project is open-source and available for educational purposes.
 
 ## 👨‍💻 Author
 
-Tarak
-Student 
-Sasi Institute of Technology & Engineering  
+- Tarak
+- Student 
+- Sasi Institute of Technology & Engineering  
 
 ---
 
