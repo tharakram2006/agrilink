@@ -126,7 +126,26 @@ No backend is used currently. All data is handled in-memory.
 - Focus on usability and simplicity  
 
 ---
+---
 
+## 📸 Screenshots
+
+### 🏠 Home Page
+<p align="center">
+  <img src="assets/screenshots/homepage.png" width="80%" alt="Home Page">
+</p>
+
+### 👨‍🌾 Farmer Dashboard
+<p align="center">
+  <img src="assets/screenshots/farmer-dashboard.png" width="80%" alt="Farmer Dashboard">
+</p>
+
+### 🛒 Buyer Dashboard
+<p align="center">
+  <img src="assets/screenshots/buyer-dashboard.png" width="80%" alt="Buyer Dashboard">
+</p>
+
+---
 ## 🛠️ Tech Stack
 
 - HTML → Structure  
@@ -139,17 +158,22 @@ No backend is used currently. All data is handled in-memory.
 ```
 AgriLink/
 │
-├── index.html
-├── style.css
-├── script.js
+├── index.html          # Main HTML file
+├── style.css           # Styling
+├── script.js           # JavaScript logic
 │
-├── assets/
-│   ├── images/
+├── assets/             # All static files
+│   ├── images/         # UI images (icons, illustrations)
 │   │   ├── farmer.png
 │   │   ├── buyer.png
-│   │   
+│   │   └── banner.png
+│   │
+│   ├── screenshots/    # Project screenshots for README
+│   │   ├── homepage.png
+│   │   ├── farmer-dashboard.png
+│   │   └── buyer-dashboard.png
 │
-└── README.md
+└── README.md           # Documentation
 ```
 ---
 
